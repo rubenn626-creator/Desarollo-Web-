@@ -4,7 +4,7 @@ Proyecto del curso Desarrollo Web Profesional con HTML, CSS, JavaScript y Git.
 Colegio de Ingenieros de Guatemala.
 
 - **Autor:** su nombre
-- **Dirección publicada:** https://jinchuika.github.io/web-2026/index.html
+- **Dirección publicada:** https://jinchuika.github.io/web-2026
 
 ## Estructura
 
