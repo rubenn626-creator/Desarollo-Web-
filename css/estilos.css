@@ -79,6 +79,52 @@ footer {
   text-align: center;
   padding: 1rem;
   margin-top: auto;
-}/* Hoja de estilos del proyecto.
-   Se empieza a trabajar en la sesión 3.
-   Las reglas se escriben debajo de este comentario. */
+}
+
+/* ==========================================
+   ESTILOS PARA TABLAS
+   ========================================== */
+
+/* Contenedor flexible para hacer la tabla adaptable a móviles */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Elimina el espacio entre bordes */
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 8px;
+  overflow: hidden; /* Mantiene bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Encabezado de la tabla (th) */
+table th {
+  background-color: #004080; /* Azul principal */
+  color: #ffffff; /* Texto blanco */
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 15px;
+}
+
+/* Celdas de datos (td) */
+table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e1e8ed; /* Línea divisoria sutil */
+  color: #333333;
+}
+
+/* Filas alternadas (Efecto Zebra para facilitar la lectura) */
+table tbody tr:nth-child(even) {
+  background-color: #f8fafc; /* Azul/Gris extremadamente claro */
+}
+
+/* Efecto al pasar el cursor sobre las filas */
+table tbody tr:hover {
+  background-color: #e6f0fa; /* Destacado en azul muy suave */
+  transition: background-color 0.2s ease;
+}
+
+/* Eliminar la línea inferior de la última fila */
+table tbody tr:last-child td {
+  border-bottom: none;
+}
