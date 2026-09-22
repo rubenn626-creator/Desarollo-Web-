@@ -1,3 +1,87 @@
+CSS
+/* Reseteo básico de márgenes */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales del cuerpo de la página */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f9; /* Fondo gris claro suave para resaltar el blanco */
+  color: #333333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezado */
+header {
+  background-color: #004080; /* Azul principal */
+  color: #ffffff; /* Texto blanco */
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin-bottom: 0.8rem;
+  font-size: 2rem;
+}
+
+/* Navegación y menú */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+nav a {
+  color: #ffffff; /* Texto blanco para los enlaces */
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por los enlaces */
+nav a:hover {
+  background-color: #0059b3; /* Azul ligeramente más claro */
+}
+
+/* Contenido principal */
+main {
+  flex: 1;
+  max-width: 900px;
+  width: 90%;
+  margin: 2rem auto;
+}
+
+section {
+  background-color: #ffffff; /* Tarjeta con fondo blanco */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #004080; /* Detalle azul en el borde */
+}
+
+section h2 {
+  color: #004080;
+  margin-bottom: 1rem;
+}
+
+/* Pie de página */
+footer {
+  background-color: #002b55; /* Azul oscuro */
+  color: #ffffff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
 /* Contenedor de las tarjetas de proyectos */
 .tarjetas {
   display: flex;
