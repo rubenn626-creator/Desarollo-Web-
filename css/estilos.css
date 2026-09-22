@@ -81,40 +81,8 @@ footer {
   margin-top: auto;
 }
 
-/* Contenedor de las tarjetas de proyectos */
-.tarjetas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-/* Estilo individual para cada tarjeta */
-.tarjetas article {
-  flex: 1 1 calc(33.333% - 1.5rem);
-  min-width: 250px;
-  background-color: var(--color-blanco);
-  padding: 1.5rem;
-  border-radius: 8px;
-  border-top: 4px solid var(--color-acento);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tarjetas article:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.tarjetas article h3 {
-  color: var(--color-principal);
-  margin-bottom: 0.5rem;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.tarjetas article p {
-  color: var(--color-texto);
-  font-family: 'Source Sans 3', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.5;
+.black-ops-one-regular {
+  font-family: "Black Ops One", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
