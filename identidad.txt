@@ -1,7 +1,8 @@
-principal  #1b4965  encabezado, botones
-acento     #e07a5f  hover, detalles
-fondo      #f7f7f2  fondo de la pagina
-texto      #1f2933  parrafos
-
-titulos    Montserrat
-texto      Source Sans 3
+/* Variables de color según la Identidad Visual */
+:root {
+  --color-principal: #1b4965;
+  --color-acento: #e07a5f;
+  --color-fondo: #f7f7f2;
+  --color-texto: #1f2933;
+  --color-blanco: #ffffff;
+}
