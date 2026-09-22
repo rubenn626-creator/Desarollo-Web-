@@ -18,11 +18,17 @@ body {
 
 /* Encabezado */
 header {
+  
+  font-family: "Black Ops One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  
   background-color: #004080; /* Azul principal */
   color: #ffffff; /* Texto blanco */
   padding: 1.5rem 2rem;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+  
 }
 
 header h1 {
