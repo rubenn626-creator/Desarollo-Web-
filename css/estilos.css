@@ -92,3 +92,28 @@ footer {
   font-weight: 400;
   font-style: normal;
 }
+
+/* CSS a agregar al final de css/estilos.css */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.tarjetas article {
+  background-color: var(--color-blanco);
+  color: var(--color-texto);
+  border: 1px solid var(--color-principal);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.tarjetas h3 {
+  color: var(--color-principal);
+  margin-top: 0;
+}
+
+.tarjetas p {
+  color: var(--color-texto);
+  margin-bottom: 0;
+}
