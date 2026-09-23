@@ -117,3 +117,79 @@ footer {
   color: var(--color-texto);
   margin-bottom: 0;
 }
+
+/* --- Variables y Estilos Modo Oscuro --- */
+:root {
+  --color-principal: #004080;
+  --color-secundario: #0059b3;
+  --color-fondo: #f4f7f9;
+  --color-tarjeta: #ffffff;
+  --color-texto: #333333;
+}
+
+body.dark-mode {
+  --color-fondo: #121212;
+  --color-tarjeta: #1e1e1e;
+  --color-texto: #e0e0e0;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+body.dark-mode section {
+  background-color: var(--color-tarjeta);
+  color: var(--color-texto);
+}
+
+/* --- Botones --- */
+button, input[type="submit"] {
+  background-color: var(--color-principal);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: var(--color-secundario);
+  transform: translateY(-2px);
+}
+
+#theme-toggle {
+  margin-top: 15px;
+  background-color: #ffffff;
+  color: #004080;
+  border: 1px solid #004080;
+}
+
+body.dark-mode #theme-toggle {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+.btn-card {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+/* --- Marcado de enlace activo --- */
+nav a.active {
+  background-color: #0059b3;
+  text-decoration: underline;
+}
+
+/* --- Mensajes de feedback --- */
+.alerta-exito {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1.2rem;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 600;
+}
