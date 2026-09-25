@@ -109,63 +109,80 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(nombre, errorNombre);
       }
 
-      if (!esCorreoValido(correo.value.trim())) {
-        mostrarError(correo, errorCorreo, 'Ingresa un correo electrónico válido.');
-        esValido = false;
+      // correo: no vacio, con arroba, y con un punto despues de la arroba
+      const posArroba = correo.value.indexOf("@");
+
+      if (correo.value.trim() === "") {
+        marcar(correo, errorCorreo, "Escriba su correo");
+        valido = false;
+      } else if (posArroba === -1) {
+        marcar(correo, errorCorreo, "Al correo le falta la arroba");
+        valido = false;
+      } else if (correo.value.indexOf(".", posArroba) === -1) {
+        marcar(correo, errorCorreo, "Al correo le falta el punto despues de la arroba");
+        valido = false;
       } else {
-        limpiarError(correo, errorCorreo);
+        marcar(correo, errorCorreo, "");
       }
 
+      // mensaje: al menos 10 caracteres
       if (mensaje.value.trim().length < 10) {
-        mostrarError(mensaje, errorMensaje, 'El mensaje debe tener al menos 10 caracteres.');
-        esValido = false;
+        marcar(mensaje, errorMensaje, "Escriba un mensaje de al menos 10 letras");
+        valido = false;
       } else {
-        limpiarError(mensaje, errorMensaje);
+        marcar(mensaje, errorMensaje, "");
       }
 
-      if (esValido) {
-        // Mostrar Estado de Carga
-        btnEnviar.disabled = true;
-        btnText.style.display = 'none';
-        btnLoader.style.display = 'inline';
-
-        // Petición AJAX a FormSubmit
-        fetch('https://formsubmit.co/ajax/rubenn626@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            Nombre: nombre.value.trim(),
-            Email: correo.value.trim(),
-            Mensaje: mensaje.value.trim(),
-            _subject: 'Nuevo mensaje desde tu sitio web'
-          })
-        })
-          .then(response => response.json())
-          .then(data => {
-            btnEnviar.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.style.display = 'none';
-
-            mensajeExito.style.display = 'block';
-            mensajeExito.textContent = '✔ ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.';
-            form.reset();
-
-            setTimeout(() => {
-              mensajeExito.style.display = 'none';
-            }, 6000);
-          })
-          .catch(error => {
-            btnEnviar.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.style.display = 'none';
-
-            mensajeExito.style.display = 'block';
-            mensajeExito.textContent = '❌ Hubo un error al enviar el mensaje. Inténtalo nuevamente.';
-          });
+      if (valido) {
+        formulario.reset();
+        mostrarExito("Datos completos. Escribame directo a lc@zolar.dev mientras conecto el envio.");
       }
     });
+  }
+
+  if (esValido) {
+    // Mostrar Estado de Carga
+    btnEnviar.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline';
+
+    // Petición AJAX a FormSubmit
+    fetch('https://formsubmit.co/ajax/rubenn626@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        Nombre: nombre.value.trim(),
+        Email: correo.value.trim(),
+        Mensaje: mensaje.value.trim(),
+        _subject: 'Nuevo mensaje desde tu sitio web'
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        btnEnviar.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+
+        mensajeExito.style.display = 'block';
+        mensajeExito.textContent = '✔ ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.';
+        form.reset();
+
+        setTimeout(() => {
+          mensajeExito.style.display = 'none';
+        }, 6000);
+      })
+      .catch(error => {
+        btnEnviar.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+
+        mensajeExito.style.display = 'block';
+        mensajeExito.textContent = '❌ Hubo un error al enviar el mensaje. Inténtalo nuevamente.';
+      });
+  }
+});
   }
 });
