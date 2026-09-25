@@ -82,3 +82,113 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contacto');
+  const nombre = document.getElementById('nombre');
+  const correo = document.getElementById('correo');
+  const mensaje = document.getElementById('mensaje');
+
+  const btnEnviar = document.getElementById('btn-enviar');
+  const btnText = btnEnviar.querySelector('.btn-text');
+  const btnLoader = btnEnviar.querySelector('.btn-loader');
+  const mensajeExito = document.getElementById('mensaje-exito');
+
+  // Función para validar correo mediante expresión regular
+  const esCorreoValido = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  // Mostrar mensaje de error
+  const mostrarError = (input, elementoError, mensajeTexto) => {
+    input.classList.add('input-error');
+    elementoError.textContent = mensajeTexto;
+  };
+
+  // Limpiar mensaje de error
+  const limpiarError = (input, elementoError) => {
+    input.classList.remove('input-error');
+    elementoError.textContent = '';
+  };
+
+  // Validaciones en tiempo real (mientras el usuario escribe)
+  nombre.addEventListener('input', () => {
+    if (nombre.value.trim().length >= 3) {
+      limpiarError(nombre, document.getElementById('error-nombre'));
+    }
+  });
+
+  correo.addEventListener('input', () => {
+    if (esCorreoValido(correo.value.trim())) {
+      limpiarError(correo, document.getElementById('error-correo'));
+    }
+  });
+
+  mensaje.addEventListener('input', () => {
+    if (mensaje.value.trim().length >= 10) {
+      limpiarError(mensaje, document.getElementById('error-mensaje'));
+    }
+  });
+
+  // Manejo del evento de envío
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let esValido = true;
+
+    // Validar Nombre
+    if (nombre.value.trim() === '') {
+      mostrarError(nombre, document.getElementById('error-nombre'), 'Por favor, ingresa tu nombre.');
+      esValido = false;
+    } else if (nombre.value.trim().length < 3) {
+      mostrarError(nombre, document.getElementById('error-nombre'), 'El nombre debe tener al menos 3 caracteres.');
+      esValido = false;
+    } else {
+      limpiarError(nombre, document.getElementById('error-nombre'));
+    }
+
+    // Validar Correo
+    if (correo.value.trim() === '') {
+      mostrarError(correo, document.getElementById('error-correo'), 'Por favor, ingresa tu correo electrónico.');
+      esValido = false;
+    } else if (!esCorreoValido(correo.value.trim())) {
+      mostrarError(correo, document.getElementById('error-correo'), 'Ingresa un correo electrónico válido.');
+      esValido = false;
+    } else {
+      limpiarError(correo, document.getElementById('error-correo'));
+    }
+
+    // Validar Mensaje
+    if (mensaje.value.trim() === '') {
+      mostrarError(mensaje, document.getElementById('error-mensaje'), 'Por favor, escribe un mensaje.');
+      esValido = false;
+    } else if (mensaje.value.trim().length < 10) {
+      mostrarError(mensaje, document.getElementById('error-mensaje'), 'El mensaje debe contener al menos 10 caracteres.');
+      esValido = false;
+    } else {
+      limpiarError(mensaje, document.getElementById('error-mensaje'));
+    }
+
+    // Si todo es válido, simular envío
+    if (esValido) {
+      btnEnviar.disabled = true;
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'inline';
+
+      setTimeout(() => {
+        btnEnviar.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+
+        // Mostrar alerta de éxito
+        mensajeExito.style.display = 'block';
+        form.reset();
+
+        // Ocultar mensaje de éxito después de 5 segundos
+        setTimeout(() => {
+          mensajeExito.style.display = 'none';
+        }, 5000);
+      }, 1500);
+    }
+  });
+});
