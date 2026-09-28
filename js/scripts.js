@@ -33,28 +33,63 @@ document.addEventListener('DOMContentLoaded', () => {
     header.appendChild(themeBtn);
   }
 
-  // 3. Tarjetas de Proyectos
-  const articles = document.querySelectorAll('.tarjetas article');
-  articles.forEach(article => {
-    const btn = document.createElement('button');
-    btn.className = 'btn-card';
-    btn.textContent = 'Ver detalles';
+  // 3. Carga dinámica de Tarjetas de Proyectos desde archivo JSON
+  const contenedorProyectos = document.getElementById('contenedor-proyectos');
 
-    const paragraph = article.querySelector('p');
-    if (paragraph) paragraph.style.display = 'none';
+  if (contenedorProyectos) {
+    fetch('proyectos.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al cargar el archivo de proyectos');
+        }
+        return response.json();
+      })
+      .then(proyectos => {
+        // Limpia el contenedor por si acaso
+        contenedorProyectos.innerHTML = '';
 
-    btn.addEventListener('click', () => {
-      if (paragraph.style.display === 'none') {
-        paragraph.style.display = 'block';
-        btn.textContent = 'Ocultar detalles';
-      } else {
-        paragraph.style.display = 'none';
-        btn.textContent = 'Ver detalles';
-      }
-    });
+        proyectos.forEach(proyecto => {
+          // Crear el artículo de la tarjeta
+          const article = document.createElement('article');
 
-    article.appendChild(btn);
-  });
+          // Crear el título (h3)
+          const h3 = document.createElement('h3');
+          h3.textContent = `${proyecto.nombre} (${proyecto.anio})`;
+
+          // Crear el párrafo de descripción
+          const p = document.createElement('p');
+          p.textContent = proyecto.descripcion;
+          p.style.display = 'none'; // Inicialmente oculto
+
+          // Crear el botón con el mismo estilo
+          const btn = document.createElement('button');
+          btn.className = 'btn-card';
+          btn.textContent = 'Ver detalles';
+
+          // Evento para mostrar/ocultar detalles
+          btn.addEventListener('click', () => {
+            if (p.style.display === 'none') {
+              p.style.display = 'block';
+              btn.textContent = 'Ocultar detalles';
+            } else {
+              p.style.display = 'none';
+              btn.textContent = 'Ver detalles';
+            }
+          });
+
+          // Armar la estructura del artículo e insertarlo en el contenedor
+          article.appendChild(h3);
+          article.appendChild(p);
+          article.appendChild(btn);
+
+          contenedorProyectos.appendChild(article);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        contenedorProyectos.innerHTML = '<p>No se pudieron cargar los proyectos en este momento.</p>';
+      });
+  }
 
   // 4. Validación y Envío con FormSubmit (AJAX)
   const form = document.getElementById('contacto');

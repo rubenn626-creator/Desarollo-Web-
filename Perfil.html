@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
 
   <link rel="stylesheet" href="css/estilos.css">
 </head>
+
 <body>
   <header>
     <h1>Perfil de Ruben</h1>
@@ -24,42 +26,11 @@
       <p>Datos de contacto</p>
     </section>
 
-    <!-- Sección Proyectos con 3 tarjetas -->
+    <!-- Sección Proyectos cargada dinámicamente -->
     <section>
       <h2>Proyectos</h2>
-      <div class="tarjetas">
-        <article>
-          <h3>Análisis Sísmico con TLD</h3>
-          <p>Evaluación y modelación de la eficiencia de Amortiguadores de Líquido Sintonizado (TLD) para la reducción de derivas de piso y cortante basal en edificios de concreto armado.</p>
-        </article>
-
-        <article>
-          <h3>Programa Arquitectónico Corporativo</h3>
-          <p>Diseño metodológico y estructuración del programa de necesidades e interactividad espacial para un edificio de oficinas de alta complejidad.</p>
-        </article>
-
-        <article>
-          <h3>Sitio Web Personal</h3>
-          <p>Desarrollo de portafolio web personal utilizando HTML y CSS nativo sin librerías externas para garantizar una estructura eficiente y personalizada.</p>
-        </article>
-      </div>
-    </section>
-
-     <section>
-      <h2>Proyectos</h2>
-      <div class="tarjetas">
-        <article>
-          <h3>Análisis Sísmico con TLD</h3>
-          <p>Evaluación y modelación de la eficiencia de Amortiguadores de Líquido Sintonizado para la reducción de derivas de piso y cortante basal.</p>
-        </article>
-        <article>
-          <h3>Programa Arquitectónico Corporativo</h3>
-          <p>Diseño metodológico y estructuración del programa de necesidades e interactividad espacial para un edificio de oficinas.</p>
-        </article>
-        <article>
-          <h3>Sitio Web Personal</h3>
-          <p>Desarrollo de portafolio personal utilizando HTML y CSS nativo sin librerías externas para garantizar una estructura eficiente.</p>
-        </article>
+      <div class="tarjetas" id="contenedor-proyectos">
+        <!-- Las tarjetas se cargarán dinámicamente desde proyectos.json -->
       </div>
     </section>
 
@@ -72,4 +43,5 @@
 
   <script src="js/scripts.js"></script>
 </body>
+
 </html>
