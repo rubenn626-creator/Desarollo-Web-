@@ -1,0 +1,17 @@
+[
+    {
+        "nombre": "Puente vehicular",
+        "anio": 2024,
+        "descripcion": "Se creo un puente veicular en el interior del pais."
+    },
+    {
+        "nombre": "Planta de tratamiento",
+        "anio": 2023,
+        "descripcion": "Se diseño una planta de tratamiento de aguas residuales."
+    },
+    {
+        "nombre": "Levantamiento topografico",
+        "anio": 2023,
+        "descripcion": "Se realizo un levantamiento topografico de la zona."
+    }
+]
