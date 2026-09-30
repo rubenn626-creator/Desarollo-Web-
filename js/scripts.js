@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 4. Validación de campos antes de enviar
+  // 4. Validación de Campos y Envío POST con FormSubmit
   const form = document.getElementById('contacto');
   if (form) {
     const nombre = document.getElementById('nombre');
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elementoError) elementoError.textContent = '';
     };
 
-    // Limpieza dinámica de errores al escribir
+    // Validaciones mientras se escribe
     nombre.addEventListener('input', () => {
       if (nombre.value.trim().length >= 3) limpiarError(nombre, errorNombre);
     });
@@ -120,10 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mensaje.value.trim().length >= 10) limpiarError(mensaje, errorMensaje);
     });
 
-    // Validar antes de enviar el formulario
+    // Control de validación al presionar "Enviar Mensaje"
     form.addEventListener('submit', (e) => {
       let esValido = true;
 
+      // Validación Nombre
       if (nombre.value.trim().length < 3) {
         mostrarError(nombre, errorNombre, 'El nombre debe tener al menos 3 caracteres.');
         esValido = false;
@@ -131,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(nombre, errorNombre);
       }
 
+      // Validación Correo
       if (!esCorreoValido(correo.value.trim())) {
         mostrarError(correo, errorCorreo, 'Ingresa un correo electrónico válido.');
         esValido = false;
@@ -138,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(correo, errorCorreo);
       }
 
+      // Validación Mensaje
       if (mensaje.value.trim().length < 10) {
         mostrarError(mensaje, errorMensaje, 'Escribe un mensaje de al menos 10 caracteres.');
         esValido = false;
@@ -145,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(mensaje, errorMensaje);
       }
 
+      // Si los datos NO son válidos, cancela el envío nativo POST
       if (!esValido) {
         e.preventDefault();
       }
