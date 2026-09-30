@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
- // 4. Validación y Envío con FormSubmit (Nativo)
+  // 4. Validación JS y Envío Nativo a FormSubmit
   const form = document.getElementById('contacto');
   if (form) {
     const nombre = document.getElementById('nombre');
@@ -148,10 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(mensaje, errorMensaje);
       }
 
-      // Si las validaciones NO pasan, detiene el envío
+      // Si no es válido, detenemos el envío. Si es válido, se enviará automáticamente.
       if (!esValido) {
         e.preventDefault();
       }
-      // Si pasa la validación, e.preventDefault() NO se ejecuta y el formulario se envía nativamente a FormSubmit
     });
   }
+});
