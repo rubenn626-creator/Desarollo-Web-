@@ -49,11 +49,16 @@
       </aside>
 
       <section class="form-card">
-        <!-- Formulario configurado para procesamiento AJAX -->
-        <form id="contacto" novalidate>
+        <!-- Formulario configurado con Web3Forms -->
+        <form id="contacto" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <!-- REEMPLAZA TU_ACCESS_KEY_AQUI POR LA CLAVE QUE RECIBISTE EN TU GMAIL -->
+          <input type="hidden" name="access_key" value="47781d7c-5036-4432-9160-f1c69314f1b6">
+          <input type="hidden" name="subject" value="Nuevo mensaje desde tu sitio web">
+          <input type="hidden" name="from_name" value="Sitio Web Rubén">
+
           <div class="form-group">
             <label for="nombre">Nombre completo</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required autocomplete="name">
+            <input type="text" id="nombre" name="name" placeholder="Ej. Juan Pérez" required autocomplete="name">
             <p class="error" id="error-nombre"></p>
           </div>
 
@@ -65,13 +70,12 @@
 
           <div class="form-group">
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+            <textarea id="mensaje" name="message" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
             <p class="error" id="error-mensaje"></p>
           </div>
 
           <button type="submit" id="btn-enviar">
             <span class="btn-text">Enviar Mensaje</span>
-            <span class="btn-loader" style="display: none;">Enviando...</span>
           </button>
         </form>
 

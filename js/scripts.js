@@ -33,30 +33,58 @@ document.addEventListener('DOMContentLoaded', () => {
     header.appendChild(themeBtn);
   }
 
-  // 3. Tarjetas de Proyectos
-  const articles = document.querySelectorAll('.tarjetas article');
-  articles.forEach(article => {
-    const btn = document.createElement('button');
-    btn.className = 'btn-card';
-    btn.textContent = 'Ver detalles';
+  // 3. Carga dinámica de Tarjetas de Proyectos desde archivo JSON
+  const contenedorProyectos = document.getElementById('contenedor-proyectos');
 
-    const paragraph = article.querySelector('p');
-    if (paragraph) paragraph.style.display = 'none';
+  if (contenedorProyectos) {
+    fetch('proyectos.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al cargar el archivo de proyectos');
+        }
+        return response.json();
+      })
+      .then(proyectos => {
+        contenedorProyectos.innerHTML = '';
 
-    btn.addEventListener('click', () => {
-      if (paragraph.style.display === 'none') {
-        paragraph.style.display = 'block';
-        btn.textContent = 'Ocultar detalles';
-      } else {
-        paragraph.style.display = 'none';
-        btn.textContent = 'Ver detalles';
-      }
-    });
+        proyectos.forEach(proyecto => {
+          const article = document.createElement('article');
 
-    article.appendChild(btn);
-  });
+          const h3 = document.createElement('h3');
+          h3.textContent = `${proyecto.nombre} (${proyecto.anio})`;
 
-  // 4. Validación y Envío con FormSubmit (AJAX)
+          const p = document.createElement('p');
+          p.textContent = proyecto.descripcion;
+          p.style.display = 'none';
+
+          const btn = document.createElement('button');
+          btn.className = 'btn-card';
+          btn.textContent = 'Ver detalles';
+
+          btn.addEventListener('click', () => {
+            if (p.style.display === 'none') {
+              p.style.display = 'block';
+              btn.textContent = 'Ocultar detalles';
+            } else {
+              p.style.display = 'none';
+              btn.textContent = 'Ver detalles';
+            }
+          });
+
+          article.appendChild(h3);
+          article.appendChild(p);
+          article.appendChild(btn);
+
+          contenedorProyectos.appendChild(article);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        contenedorProyectos.innerHTML = '<p>No se pudieron cargar los proyectos en este momento.</p>';
+      });
+  }
+
+  // 4. Validación de campos antes de enviar
   const form = document.getElementById('contacto');
   if (form) {
     const nombre = document.getElementById('nombre');
@@ -67,24 +95,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorCorreo = document.getElementById('error-correo');
     const errorMensaje = document.getElementById('error-mensaje');
 
-    const btnEnviar = document.getElementById('btn-enviar');
-    const btnText = btnEnviar.querySelector('.btn-text');
-    const btnLoader = btnEnviar.querySelector('.btn-loader');
-    const mensajeExito = document.getElementById('mensaje-exito');
-
     const esCorreoValido = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
 
     const mostrarError = (input, elementoError, mensajeTexto) => {
       input.classList.add('input-error');
-      elementoError.textContent = mensajeTexto;
+      if (elementoError) elementoError.textContent = mensajeTexto;
     };
 
     const limpiarError = (input, elementoError) => {
       input.classList.remove('input-error');
-      elementoError.textContent = '';
+      if (elementoError) elementoError.textContent = '';
     };
 
-    // Validaciones al escribir
+    // Limpieza dinámica de errores al escribir
     nombre.addEventListener('input', () => {
       if (nombre.value.trim().length >= 3) limpiarError(nombre, errorNombre);
     });
@@ -97,9 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mensaje.value.trim().length >= 10) limpiarError(mensaje, errorMensaje);
     });
 
-    // Envío del formulario
+    // Validar antes de enviar el formulario
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
       let esValido = true;
 
       if (nombre.value.trim().length < 3) {
@@ -108,76 +130,24 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         limpiarError(nombre, errorNombre);
       }
-       // correo: no vacio, con arroba, y con un punto despues de la arroba
-      const posArroba = correo.value.indexOf("@");
 
-      if (correo.value.trim() === "") {
-        marcar(correo, errorCorreo, "Escriba su correo");
-        valido = false;
-      } else if (posArroba === -1) {
-        marcar(correo, errorCorreo, "Al correo le falta la arroba");
-        valido = false;
-      } else if (correo.value.indexOf(".", posArroba) === -1) {
-        marcar(correo, errorCorreo, "Al correo le falta el punto despues de la arroba");
-        valido = false;
+      if (!esCorreoValido(correo.value.trim())) {
+        mostrarError(correo, errorCorreo, 'Ingresa un correo electrónico válido.');
+        esValido = false;
       } else {
-                marcar(correo, errorCorreo, "");
+        limpiarError(correo, errorCorreo);
       }
-       // mensaje: al menos 10 caracteres
-          if (mensaje.value.trim().length < 10) {
-             marcar(mensaje, errorMensaje, "Escriba un mensaje de al menos 10 letras");
-        valido = false;
+
+      if (mensaje.value.trim().length < 10) {
+        mostrarError(mensaje, errorMensaje, 'Escribe un mensaje de al menos 10 caracteres.');
+        esValido = false;
       } else {
-         marcar(mensaje, errorMensaje, "");
+        limpiarError(mensaje, errorMensaje);
       }
-       if (valido) {
-        formulario.reset();
-        mostrarExito("Datos completos. Escribame directo a lc@zolar.dev mientras conecto el envio.");
+
+      if (!esValido) {
+        e.preventDefault();
       }
     });
-  }
-
-  if (esValido) {
-    // Mostrar Estado de Carga
-    btnEnviar.disabled = true;
-    btnText.style.display = 'none';
-    btnLoader.style.display = 'inline';
-
-    // Petición AJAX a FormSubmit
-    fetch('https://formsubmit.co/ajax/rubenn626@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        Nombre: nombre.value.trim(),
-        Email: correo.value.trim(),
-        Mensaje: mensaje.value.trim(),
-        _subject: 'Nuevo mensaje desde tu sitio web'
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        btnEnviar.disabled = false;
-        btnText.style.display = 'inline';
-        btnLoader.style.display = 'none';
-
-        mensajeExito.style.display = 'block';
-        mensajeExito.textContent = '✔ ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.';
-        form.reset();
-
-        setTimeout(() => {
-          mensajeExito.style.display = 'none';
-        }, 6000);
-      })
-      .catch(error => {
-        btnEnviar.disabled = false;
-        btnText.style.display = 'inline';
-        btnLoader.style.display = 'none';
-
-        mensajeExito.style.display = 'block';
-        mensajeExito.textContent = '❌ Hubo un error al enviar el mensaje. Inténtalo nuevamente.';
-      });
   }
 });
