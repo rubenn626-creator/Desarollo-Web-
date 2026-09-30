@@ -49,7 +49,11 @@
       </aside>
 
       <section class="form-card">
-        <form id="contacto" novalidate>
+        <form id="contacto" action="https://formsubmit.co/rubenn626@gmail.com" method="POST" novalidate>
+          <!-- Campos de configuración de FormSubmit -->
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde tu sitio web">
+
           <div class="form-group">
             <label for="nombre">Nombre completo</label>
             <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required autocomplete="name">
@@ -70,7 +74,6 @@
 
           <button type="submit" id="btn-enviar">
             <span class="btn-text">Enviar Mensaje</span>
-            <span class="btn-loader" style="display: none;">Enviando...</span>
           </button>
         </form>
 
