@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 4. Validación y Envío con FormSubmit (AJAX)
+ // 4. Validación y Envío con FormSubmit (Nativo)
   const form = document.getElementById('contacto');
   if (form) {
     const nombre = document.getElementById('nombre');
@@ -94,10 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorNombre = document.getElementById('error-nombre');
     const errorCorreo = document.getElementById('error-correo');
     const errorMensaje = document.getElementById('error-mensaje');
-
-    const btnEnviar = document.getElementById('btn-enviar');
-    const btnText = btnEnviar ? btnEnviar.querySelector('.btn-text') : null;
-    const mensajeExito = document.getElementById('mensaje-exito');
 
     const esCorreoValido = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
 
@@ -111,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elementoError) elementoError.textContent = '';
     };
 
-    // Validaciones en tiempo real
+    // Validaciones mientras el usuario escribe
     nombre.addEventListener('input', () => {
       if (nombre.value.trim().length >= 3) limpiarError(nombre, errorNombre);
     });
@@ -126,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Evento Submit
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
       let esValido = true;
 
       // Validación Nombre
@@ -153,66 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(mensaje, errorMensaje);
       }
 
-      // Petición AJAX si el formulario es válido
-      if (esValido) {
-        if (btnEnviar) btnEnviar.disabled = true;
-        if (btnText) btnText.textContent = 'Enviando...';
-
-        fetch('https://formsubmit.co/ajax/rubenn626@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            nombre: nombre.value.trim(),
-            email: correo.value.trim(),
-            mensaje: mensaje.value.trim(),
-            _subject: 'Nuevo mensaje desde tu sitio web'
-          })
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Respuesta del servidor no fue OK');
-            }
-            return response.json();
-          })
-          .then(data => {
-            if (btnEnviar) btnEnviar.disabled = false;
-            if (btnText) btnText.textContent = 'Enviar Mensaje';
-
-            if (mensajeExito) {
-              mensajeExito.style.display = 'block';
-              mensajeExito.style.color = '#155724';
-              mensajeExito.style.backgroundColor = '#d4edda';
-              mensajeExito.style.padding = '10px';
-              mensajeExito.style.borderRadius = '5px';
-              mensajeExito.style.marginTop = '15px';
-              mensajeExito.textContent = '✔ ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.';
-            }
-
-            form.reset();
-
-            setTimeout(() => {
-              if (mensajeExito) mensajeExito.style.display = 'none';
-            }, 6000);
-          })
-          .catch(error => {
-            console.error('Error al enviar formulario:', error);
-            if (btnEnviar) btnEnviar.disabled = false;
-            if (btnText) btnText.textContent = 'Enviar Mensaje';
-
-            if (mensajeExito) {
-              mensajeExito.style.display = 'block';
-              mensajeExito.style.color = '#721c24';
-              mensajeExito.style.backgroundColor = '#f8d7da';
-              mensajeExito.style.padding = '10px';
-              mensajeExito.style.borderRadius = '5px';
-              mensajeExito.style.marginTop = '15px';
-              mensajeExito.textContent = '❌ Hubo un error al enviar el mensaje. Revisa tu conexión o inténtalo más tarde.';
-            }
-          });
+      // Si las validaciones NO pasan, detiene el envío
+      if (!esValido) {
+        e.preventDefault();
       }
+      // Si pasa la validación, e.preventDefault() NO se ejecuta y el formulario se envía nativamente a FormSubmit
     });
   }
-});
