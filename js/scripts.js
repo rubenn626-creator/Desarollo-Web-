@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
       let esValido = true;
 
-      // Validación Nombre
       if (nombre.value.trim().length < 3) {
         mostrarError(nombre, errorNombre, 'El nombre debe tener al menos 3 caracteres.');
         esValido = false;
@@ -132,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(nombre, errorNombre);
       }
 
-      // Validación Correo
       if (!esCorreoValido(correo.value.trim())) {
         mostrarError(correo, errorCorreo, 'Ingresa un correo electrónico válido.');
         esValido = false;
@@ -140,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(correo, errorCorreo);
       }
 
-      // Validación Mensaje
       if (mensaje.value.trim().length < 10) {
         mostrarError(mensaje, errorMensaje, 'Escribe un mensaje de al menos 10 caracteres.');
         esValido = false;
@@ -148,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(mensaje, errorMensaje);
       }
 
-      // Si los datos NO son válidos, cancela el envío nativo POST
       if (!esValido) {
         e.preventDefault();
       }
