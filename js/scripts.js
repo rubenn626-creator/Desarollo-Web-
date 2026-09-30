@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 4. Validación y Envío con FormSubmit (AJAX)
+// 4. Validación y Envío con FormSubmit
   const form = document.getElementById('contacto');
   if (form) {
     const nombre = document.getElementById('nombre');
@@ -101,11 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorNombre = document.getElementById('error-nombre');
     const errorCorreo = document.getElementById('error-correo');
     const errorMensaje = document.getElementById('error-mensaje');
-
-    const btnEnviar = document.getElementById('btn-enviar');
-    const btnText = btnEnviar.querySelector('.btn-text');
-    const btnLoader = btnEnviar.querySelector('.btn-loader');
-    const mensajeExito = document.getElementById('mensaje-exito');
 
     const esCorreoValido = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
 
@@ -119,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       elementoError.textContent = '';
     };
 
-    // Validaciones al escribir
+    // Validaciones mientras el usuario escribe
     nombre.addEventListener('input', () => {
       if (nombre.value.trim().length >= 3) limpiarError(nombre, errorNombre);
     });
@@ -161,51 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(mensaje, errorMensaje);
       }
 
-      // Si todo es válido, realizar envío con FormSubmit
+      // Si las validaciones pasan, se envía el formulario directamente
       if (esValido) {
-        // Mostrar Estado de Carga
-        btnEnviar.disabled = true;
-        btnText.style.display = 'none';
-        btnLoader.style.display = 'inline';
-
-        // Petición AJAX a FormSubmit
-        fetch('https://formsubmit.co/ajax/rubenn626@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            Nombre: nombre.value.trim(),
-            Email: correo.value.trim(),
-            Mensaje: mensaje.value.trim(),
-            _subject: 'Nuevo mensaje desde tu sitio web'
-          })
-        })
-          .then(response => response.json())
-          .then(data => {
-            btnEnviar.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.style.display = 'none';
-
-            mensajeExito.style.display = 'block';
-            mensajeExito.textContent = '✔ ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.';
-            form.reset();
-
-            setTimeout(() => {
-              mensajeExito.style.display = 'none';
-            }, 6000);
-          })
-          .catch(error => {
-            console.error('Error al enviar:', error);
-            btnEnviar.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.style.display = 'none';
-
-            mensajeExito.style.display = 'block';
-            mensajeExito.textContent = '❌ Hubo un error al enviar el mensaje. Inténtalo nuevamente.';
-          });
+        form.submit();
       }
     });
   }
-});
